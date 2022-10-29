@@ -2,7 +2,7 @@ import type {NextFunction, Request, Response} from 'express';
 import express from 'express';
 import FreetCollection from './collection';
 import * as userValidator from '../user/middleware';
-import * as freetValidator from '../freet/middleware';
+import * as freetValidator from './middleware';
 import * as util from './util';
 
 const router = express.Router();
@@ -28,21 +28,22 @@ const router = express.Router();
 router.get(
   '/',
   async (req: Request, res: Response, next: NextFunction) => {
-    // Check if author query parameter was supplied
-    if (req.query.author !== undefined) {
+    // Check if username (author) query parameter was supplied
+    if (req.query.username !== undefined) {
       next();
       return;
     }
 
+    console.log("username to find freets of" + req.query.username);
     const allFreets = await FreetCollection.findAll();
     const response = allFreets.map(util.constructFreetResponse);
     res.status(200).json(response);
   },
   [
-    userValidator.isAuthorExists
+    userValidator.isQueryUsernameExists
   ],
   async (req: Request, res: Response) => {
-    const authorFreets = await FreetCollection.findAllByUsername(req.query.author as string);
+    const authorFreets = await FreetCollection.findAllByUsername(req.query.username as string);
     const response = authorFreets.map(util.constructFreetResponse);
     res.status(200).json(response);
   }

@@ -65,6 +65,8 @@ Vue proxies any URL it can't resolve on the client side (at port 8080) to the se
 
 ## Deployment to Vercel
 
+Link to deployed project: https://vercel.com/pujabalaji/fritter-project/EWwsqa4ncG5nxBQ2s9vw7qfziu7K
+
 We will be using Vercel to host a publicly accessible deployment of your application.
 
 1. Log in to Vercel and go to the [project creation page](https://vercel.com/new) and select `Continue with GitHub`.

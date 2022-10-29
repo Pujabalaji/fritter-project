@@ -1,6 +1,6 @@
 import type {Request, Response, NextFunction} from 'express';
 import {Types} from 'mongoose';
-import FreetCollection from '../freet/collection';
+import FreetCollection from './collection';
 
 /**
  * Checks if a freet with freetId is req.params exists
@@ -57,8 +57,28 @@ const isValidFreetModifier = async (req: Request, res: Response, next: NextFunct
   next();
 };
 
+/**
+ * Checks if freet id in body is a valid freet
+ */
+const isFreetIdInBodyExists = async(req: Request, res: Response, next: NextFunction) => {
+  const freetId = req.body.freetId;
+  if (!freetId) {
+    res.status(400).json({error: "Missing freetId in request body"});
+  }
+
+  const freet = FreetCollection.findOne(freetId);
+
+  if (freet) {
+    next()
+  } else {
+    res.status(404).json({error: "The freet ID provided is not a valid freet"});
+  }
+  return;
+};
+
 export {
   isValidFreetContent,
   isFreetExists,
-  isValidFreetModifier
+  isValidFreetModifier,
+  isFreetIdInBodyExists
 };

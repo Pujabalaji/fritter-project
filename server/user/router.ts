@@ -16,7 +16,7 @@ const router = express.Router();
  *
  * @return - currently logged in user, or null if not logged in
  */
-router.get(
+ router.get(
   '/session',
   [],
   async (req: Request, res: Response) => {
@@ -51,6 +51,9 @@ router.post(
     userValidator.isAccountExists
   ],
   async (req: Request, res: Response) => {
+    console.log("In user router, Creating new session:");
+    console.log("req.body.username" + req.body.username);
+    console.log("req.body.password" + req.body.password);
     const user = await UserCollection.findOneByUsernameAndPassword(
       req.body.username, req.body.password
     );
