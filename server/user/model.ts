@@ -11,7 +11,6 @@ export type User = {
   _id: Types.ObjectId; // MongoDB assigns each object this ID on creation
   username: string;
   password: string;
-  dateModified: Date;
   following: Array<Types.ObjectId>;
   profiles: Array<Types.ObjectId>;
 };

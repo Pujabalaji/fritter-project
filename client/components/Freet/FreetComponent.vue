@@ -82,6 +82,9 @@ export default {
     };
   },
   methods: {
+    // created()
+    // do API call
+    // 
     startEditing() {
       /**
        * Enables edit mode on this freet.

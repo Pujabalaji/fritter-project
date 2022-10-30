@@ -4,15 +4,17 @@
       <NavBar />
     </header>
     <router-view />
+    <FollowerModal />
   </div>
 </template>
 
 <script>
 import NavBar from '@/components/common/NavBar.vue';
+import FollowerModal from '@/components/Follow/FollowerModal.vue';
 
 export default {
   name: 'App',
-  components: {NavBar},
+  components: {NavBar, FollowerModal},
   beforeCreate() {
     // Sync stored username to current session
     fetch('/api/users/session', {

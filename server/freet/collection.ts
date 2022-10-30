@@ -26,7 +26,7 @@ class FreetCollection {
       authorId,
       dateCreated: date,
       content,
-      dateSeen: date
+      dateModified: date
     });
     await freet.save(); // Saves freet to MongoDB
     return freet.populate('authorId');
@@ -73,7 +73,7 @@ class FreetCollection {
   static async updateOne(freetId: Types.ObjectId | string, content: string): Promise<HydratedDocument<Freet>> {
     const freet = await FreetModel.findOne({_id: freetId});
     freet.content = content;
-    freet.dateSeen = new Date();
+    freet.dateModified = new Date();
     await freet.save();
     return freet.populate('authorId');
   }

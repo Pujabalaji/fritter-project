@@ -7,6 +7,8 @@
       <header>
         <h2>Account settings for @{{ $store.state.username }}</h2>
       </header>
+      <FollowerModal />
+      <FolloweeModal />
       <ChangeUsernameForm />
       <ChangePasswordForm />
     </section>
@@ -25,6 +27,8 @@ import ChangeUsernameForm from '@/components/Account/ChangeUsernameForm.vue';
 import ChangePasswordForm from '@/components/Account/ChangePasswordForm.vue';
 import DeleteAccountForm from '@/components/Account/DeleteAccountForm.vue';
 import LogoutForm from '@/components/Account/LogoutForm.vue';
+import FollowerModal from '@/components/Follow/FollowerModal.vue';
+import FolloweeModal from '@/components/Follow/FolloweeModal.vue';
 
 export default {
   name: 'AccountPage',
@@ -32,7 +36,9 @@ export default {
     ChangeUsernameForm,
     ChangePasswordForm,
     DeleteAccountForm,
-    LogoutForm
+    LogoutForm,
+    FollowerModal,
+    FolloweeModal
   }
 };
 </script>
