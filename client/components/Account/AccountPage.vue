@@ -9,6 +9,7 @@
       </header>
       <FollowerModal />
       <FolloweeModal />
+      <AllUsersModal />
       <ChangeUsernameForm />
       <ChangePasswordForm />
     </section>
@@ -29,6 +30,7 @@ import DeleteAccountForm from '@/components/Account/DeleteAccountForm.vue';
 import LogoutForm from '@/components/Account/LogoutForm.vue';
 import FollowerModal from '@/components/Follow/FollowerModal.vue';
 import FolloweeModal from '@/components/Follow/FolloweeModal.vue';
+import AllUsersModal from '@/components/Follow/AllUsersModal.vue';
 
 export default {
   name: 'AccountPage',
@@ -38,7 +40,8 @@ export default {
     DeleteAccountForm,
     LogoutForm,
     FollowerModal,
-    FolloweeModal
+    FolloweeModal,
+    AllUsersModal
   }
 };
 </script>

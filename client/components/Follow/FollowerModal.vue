@@ -21,7 +21,7 @@
         </template>
       </Modal>
     </div>
-  </template>
+</template>
 
 <script>
 import Modal from "@/components/common/Modal.vue"

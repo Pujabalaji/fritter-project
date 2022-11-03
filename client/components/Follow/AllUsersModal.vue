@@ -1,56 +1,56 @@
 <template>
     <div>
-      <button class="btn btn--primary mx-auto" @click="$refs.followeeModal.openModal()">Followees</button>
+      <button class="btn btn--primary mx-auto" @click="$refs.allUsersModal.openModal()">Add Users</button>
 
-      <Modal ref="followeeModal">
+      <Modal ref="allUsersModal">
         <template v-slot:header>
-          <h1>View Followees</h1>
+          <h1>Add Users</h1>
         </template>
   
         <template v-slot:body>
-            <div v-for="followee in followees">
-                {{ followee.username }}
-                <!-- <UserFollowResult v-bind:username="followee.username" /> -->
+            <div v-for="user in allUsers">
+                <UserFollowResult v-bind:username="user.username" />
             </div>
         </template>
   
         <template v-slot:footer>
           <div class="d-flex align-items-center justify-content-between">
-            <button class="btn btn--secondary" @click="$refs.followeeModal.closeModal()">Cancel</button>
-            <button class="btn btn--primary" @click="$refs.followeeModal.closeModal()">Save</button>
+            <button class="btn btn--secondary" @click="$refs.allUsersModal.closeModal()">Cancel</button>
+            <button class="btn btn--primary" @click="$refs.allUsersModal.closeModal()">Save</button>
           </div>
         </template>
       </Modal>
     </div>
-  </template>
+</template>
 
-<script>
+<script lang="ts">
 import Modal from "@/components/common/Modal.vue"
 import UserFollowResult from "@/components/Follow/UserFollowResult.vue"
 
 export default {
-    name: "FolloweeModal",
+    name: "AllUsersModal",
     components: {
         Modal,
         UserFollowResult
     },
     data() {
         return {
-            followees: this.getAllFollowees(),
+            allUsers: this.getAllUsers(),
         }
     }, 
     methods: {
-        async getAllFollowees() {
+        async getAllUsers() {
             /** 
              * Gets list of users who follow this user.
-             * GET /api/follow/followees/:username?
+             * GET /api/follow/followers/:username?
             */
             const params = {
                 method: 'GET'
             }
             const response = await this.request(params);
-
-            this.followees = response;
+            console.log("all users response");
+            console.log(response);
+            this.allUsers = response;
         },
         async request(params) {
             /**
@@ -67,7 +67,7 @@ export default {
             }
 
             try {
-                const r = await fetch(`/api/follow/followees/${this.$store.state.username}`, options);
+                const r = await fetch(`/api/users`, options);
                 if (!r.ok) {
                 const res = await r.json();
                 throw new Error(res.error);

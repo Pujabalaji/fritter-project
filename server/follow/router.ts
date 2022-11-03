@@ -80,7 +80,7 @@ const router = express.Router();
 /**
  * Follow a user.
  *
- * @name POST /api/follow/?username=username
+ * @name POST /api/follow?username=username
  *
  * @param {string} content - The content of the freet
  * @return {FreetResponse} - The created freet
