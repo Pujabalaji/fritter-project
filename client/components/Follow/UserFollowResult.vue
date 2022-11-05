@@ -1,7 +1,7 @@
 <template>
     <div>
         {{ username }}
-        <button v-if = "$store.state.username !== username && (followees.filter(followeeUsername => followeeUsername === username).length == 0) " class="btn btn--primary mx-auto" @click="followRequest">Add Follow</button>
+        <button v-if = "$store.state.username !== username && this.doesNotFollow(username)" class="btn btn--primary mx-auto" @click="followRequest">Add Follow</button>
     </div>
   </template>
 
@@ -18,6 +18,9 @@ export default {
         username: String,
     },
     methods: {
+        doesNotFollow(username) {
+            return (this.followees.filter(followeeUsername => followeeUsername == username)).length == 0
+        },
         async followRequest() {
             /** 
              * Gets list of users who follow this user.
@@ -27,7 +30,6 @@ export default {
                 method: 'POST'
             }
             const response = await this.requestAddFollow(params);
-            console.log("response in userfollowresult");
         },
         async requestAddFollow(params) {
             /**
@@ -68,7 +70,6 @@ export default {
             }
             const response = await this.requestAllFollowees(params);
             this.followees = response.map(x => x.username);
-            // console.log("isArray"+Array.isArray(this.followees));
         },
         async requestAllFollowees(params) {
             /**

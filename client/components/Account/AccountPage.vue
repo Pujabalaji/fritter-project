@@ -3,17 +3,34 @@
 
 <template>
   <main>
+    <!-- general settings section -->
+    <section>
+      <header>
+        <h2>Welcome to the settings for @{{ $store.state.username }} </h2>
+        <FollowerModal />
+        <FolloweeModal />
+        <AllUsersModal />
+      </header>
+    </section>
+
+    <!-- profile settings section -->
+    <section>
+      <header>
+        <h2> Profile settings </h2>
+      </header>
+      <AllProfilesModal />
+      <CreateProfileForm />
+      <DeleteProfileForm />
+    </section>
+
+    <!-- account settings section -->
     <section>
       <header>
         <h2>Account settings for @{{ $store.state.username }}</h2>
       </header>
-      <FollowerModal />
-      <FolloweeModal />
-      <AllUsersModal />
       <ChangeUsernameForm />
       <ChangePasswordForm />
-    </section>
-    <section>
+    
       <header>
         <h2>Account management</h2>
       </header>
@@ -31,6 +48,9 @@ import LogoutForm from '@/components/Account/LogoutForm.vue';
 import FollowerModal from '@/components/Follow/FollowerModal.vue';
 import FolloweeModal from '@/components/Follow/FolloweeModal.vue';
 import AllUsersModal from '@/components/Follow/AllUsersModal.vue';
+import CreateProfileForm from '@/components/Profile/CreateProfileForm.vue';
+import DeleteProfileForm from '@/components/Profile/DeleteProfileForm.vue';
+import AllProfilesModal from '@/components/Profile/AllProfilesModal.vue';
 
 export default {
   name: 'AccountPage',
@@ -41,7 +61,10 @@ export default {
     LogoutForm,
     FollowerModal,
     FolloweeModal,
-    AllUsersModal
+    AllUsersModal,
+    CreateProfileForm,
+    DeleteProfileForm,
+    AllProfilesModal
   }
 };
 </script>

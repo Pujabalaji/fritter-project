@@ -15,8 +15,7 @@
   
         <template v-slot:footer>
           <div class="d-flex align-items-center justify-content-between">
-            <button class="btn btn--secondary" @click="$refs.followerModal.closeModal()">Cancel</button>
-            <button class="btn btn--primary" @click="$refs.followerModal.closeModal()">Save</button>
+            <button class="btn btn--secondary" @click="$refs.followerModal.closeModal()">Close</button>
           </div>
         </template>
       </Modal>
