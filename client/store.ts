@@ -10,7 +10,11 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
   state: {
     filter: null, // Username to filter shown freets by (null = show all)
+    profiles: [],
+    bookmarkFilter: null, // [profileName, keyword] to query bookmarks by ([] = show all bookmarks) 
+    bookmarks: [],
     freets: [], // All freets created in the app
+    followees: [],
     username: null, // Username of the logged in user
     alerts: {} // global success/error messages encountered during submissions to non-visible forms
   },
@@ -31,12 +35,34 @@ const store = new Vuex.Store({
        */
       state.username = username;
     },
+    setProfiles(state, profiles) {
+      state.profiles = profiles;
+    },
+    addToProfiles(state, profile) {
+      state.profiles.push(profile);
+    },
+    setFollowees(state, followees) {
+      state.followees = followees;
+    },
+    addToFollowees(state, followee) {
+      /**
+       * Add a new followee to list of followees.
+       */
+      state.followees.push(followee);
+    },
     updateFilter(state, filter) {
       /**
        * Update the stored freets filter to the specified one.
-       * @param filter - Username of the user to fitler freets by
+       * @param filter - Username of the user to filter freets by
        */
       state.filter = filter;
+    },
+    updateBookmarkFilter(state, filter) {
+      /**
+       * Update the stored bookmark filter to the specified one.
+       * @param filter - Profile name and keyword to filter freets by
+       */
+      state.bookmarkFilter = filter;
     },
     updateFreets(state, freets) {
       /**
@@ -45,13 +71,29 @@ const store = new Vuex.Store({
        */
       state.freets = freets;
     },
+    updateBookmarks(state, bookmarks) {
+      state.bookmarks = bookmarks;
+    },
     async refreshFreets(state) {
       /**
        * Request the server for the currently available freets.
        */
-      const url = state.filter ? `/api/users/${state.filter}/freets` : '/api/freets';
+      const url = state.filter ? `/api/freets?author=${state.filter}` : '/api/freets';
       const res = await fetch(url).then(async r => r.json());
       state.freets = res;
+    },
+    async refreshProfiles(state) {
+      if (state.username) {
+        const url = `/api/profile?username=${state.username}`;
+        const res = await fetch(url).then(async r => r.json());
+        const profiles = res.map(profile => profile.profileName);
+        state.profiles = profiles;
+      }
+    },
+    async refreshBookmarks(state) {
+      const url = state.bookmarkFilter ? `/api/users/bookmark` : '/api/bookmark';
+      const res = await fetch(url).then(async r => r.json());
+      state.bookmarks = res;
     }
   },
   // Store data across page refreshes, only discard on browser close

@@ -8,8 +8,8 @@
         </template>
   
         <template v-slot:body>
-            <div v-for="followee in followees" v-bind:key="followee.id">
-                {{ followee.username }}
+            <div v-for="followee in $store.state.followees" v-bind:key="followee.id">
+                {{ followee }}
                 <!-- <UserFollowResult v-bind:username="followee.username" /> -->
             </div>
         </template>
@@ -21,11 +21,11 @@
         </template>
       </Modal>
     </div>
-  </template>
+</template>
 
 <script>
-import Modal from "@/components/common/Modal.vue"
-import UserFollowResult from "@/components/Follow/UserFollowResult.vue"
+import Modal from "@/components/common/Modal.vue";
+import UserFollowResult from "@/components/Follow/UserFollowResult.vue";
 
 export default {
     name: "FolloweeModal",
@@ -33,10 +33,8 @@ export default {
         Modal,
         UserFollowResult
     },
-    data() {
-        return {
-            followees: this.getAllFollowees(),
-        }
+    mounted() {
+        this.getAllFollowees();
     }, 
     methods: {
         async getAllFollowees() {
@@ -48,8 +46,12 @@ export default {
                 method: 'GET'
             }
             const response = await this.request(params);
-
-            this.followees = response;
+            const followees = response.map(followee => followee.username);
+            console.log("followees");
+            console.log(this.$store.state.followees);
+            this.$store.commit('setFollowees', followees);
+            // console.log("followees");
+            // console.log(this.$store.state.followees);
         },
         async request(params) {
             /**
@@ -74,7 +76,6 @@ export default {
                 }
 
                 const response = await r.json();
-                console.log(response);
                 return response;
             } catch (e) {
                 this.$set(this.alerts, e, 'error');

@@ -3,23 +3,18 @@
         {{ username }}
         <button v-if = "$store.state.username !== username && this.doesNotFollow(username)" class="btn btn--primary mx-auto" @click="followRequest">Add Follow</button>
     </div>
-  </template>
+</template>
 
-<script lang="ts">
+<script>
 
 export default {
     name: "UserFollowResult",
-    data() {
-        return {
-            followees: this.getAllFollowees(),
-        }
-    },
     props: {
         username: String,
     },
     methods: {
         doesNotFollow(username) {
-            return (this.followees.filter(followeeUsername => followeeUsername == username)).length == 0
+            return (this.$store.state.followees.filter(followeeUsername => followeeUsername == username)).length == 0
         },
         async followRequest() {
             /** 
@@ -52,7 +47,9 @@ export default {
                 throw new Error(res.error);
                 return res;
                 }
-
+                
+                console.log("adding" + this.username + " to followees");
+                this.$store.commit('addToFollowees', this.username);
                 const response = await r.json();
                 return response;
             } catch (e) {

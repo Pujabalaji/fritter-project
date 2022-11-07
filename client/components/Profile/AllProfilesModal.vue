@@ -8,8 +8,8 @@
         </template>
   
         <template v-slot:body>
-            <div v-for="profile in allProfiles" v-bind:key="profile.profileName">
-                {{ profile.profileName }}
+            <div v-for="profileName in $store.state.profiles" v-bind:key="profileName">
+                {{ profileName }}
             </div>
         </template>
   
@@ -30,11 +30,9 @@ export default {
     components: {
         Modal
     },
-    data() {
-        return {
-            allProfiles: this.getAllProfiles()
-        }
-    }, 
+    mounted() {
+        this.getAllProfiles();
+    },
     methods: {
         async getAllProfiles() {
             /** 
@@ -47,7 +45,10 @@ export default {
             const response = await this.request(params);
             console.log("all profiles response");
             console.log(response);
-            this.allProfiles = response;
+            const profiles = response.map(profile => profile.profileName);
+            console.log(profiles);
+            this.$store.commit('setProfiles', profiles);
+            console.log(this.$store.state.profiles);
         },
         async request(params) {
             /**
@@ -64,7 +65,6 @@ export default {
             }
 
             try {
-                console.log()
                 const r = await fetch(`/api/profile?username=${this.$store.state.username}`, options);
                 if (!r.ok) {
                 const res = await r.json();

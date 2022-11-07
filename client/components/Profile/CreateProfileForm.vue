@@ -11,13 +11,15 @@ export default {
       url: '/api/profile',
       method: 'POST',
       hasBody: true,
-      setProfileName: true,
+      refreshProfiles: true,
       fields: [
         {id: 'profileName', label: 'Profile Name', value: ''},
       ],
       title: 'Create profile',
       callback: () => {
         const message = 'Successfully created a profile!';
+        console.log("in create profile form");
+        console.log(this.$store.state.profiles);
         this.$set(this.alerts, message, 'success');
         setTimeout(() => this.$delete(this.alerts, message), 3000);
       }

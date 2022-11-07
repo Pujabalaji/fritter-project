@@ -11,6 +11,7 @@ import {userRouter} from '../server/user/router';
 import {freetRouter} from '../server/freet/router';
 import {followRouter} from '../server/follow/router';
 import { profileRouter } from '../server/profile/router';
+import { bookmarkRouter } from '../server/bookmark/router';
 import MongoStore from 'connect-mongo';
 
 // Load environmental variables
@@ -74,6 +75,7 @@ app.use('/api/users', userRouter);
 app.use('/api/freets', freetRouter);
 app.use('/api/follow', followRouter);
 app.use('/api/profile', profileRouter);
+app.use('/api/bookmark', bookmarkRouter);
 
 // Catch all the other routes and display error message
 app.all('*', (req: Request, res: Response) => {

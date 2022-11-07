@@ -48,8 +48,6 @@ export default {
                 method: 'GET'
             }
             const response = await this.request(params);
-            console.log("all users response");
-            console.log(response);
             this.allUsers = response;
         },
         async request(params) {
@@ -75,7 +73,6 @@ export default {
                 }
 
                 const response = await r.json();
-                console.log(response);
                 return response;
             } catch (e) {
                 this.$set(this.alerts, e, 'error');

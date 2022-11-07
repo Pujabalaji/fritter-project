@@ -22,6 +22,7 @@ const constructFolloweeResponse = (follow: HydratedDocument<Follow>): FollowResp
   };
   const user = followCopy.followeeId // followeeId is a User in Populated Follow
   return {
+    ...followCopy,
     _id: user._id.toString(),
     username: user.username
   };
@@ -41,9 +42,9 @@ const constructFolloweeResponse = (follow: HydratedDocument<Follow>): FollowResp
     })
   };
   const user = followCopy.followerId // followerId is a User in Populated Follow
-  console.log("user is");
-  console.log(user);
+  
   return {
+    ...followCopy,
     _id: user._id.toString(),
     username: user.username
   };
