@@ -20,19 +20,14 @@
       <i v-if="freet.edited">(edited)</i>
     </p>
     <span class="freet-actions">
-      <div class="freet-own-author" v-if="$store.state.username === freet.author">
         <button v-if="editing" @click="submitEdit">✅ Save changes</button>
         <button v-if="editing" @click="stopEditing">🚫 Discard changes</button>
         <button v-if="!editing" @click="startEditing">✏️ Edit</button>
         <button @click="deleteFreet">🗑️ Delete</button>
         <button v-if="!bookmarking" @click="startBookmarking">🔖 Bookmark</button>
-      </div>
-      <div class="freet-non-author" v-if="$store.state.username !== freet.author">
-        <button v-if="!bookmarking" @click="startBookmarking">🔖 Bookmark</button>
         <Modal v-if="bookmarking">
           <SelectProfileModal :freet="freet" />
         </Modal>
-      </div>
     </span>
     <section class="alerts">
       <article
@@ -170,6 +165,12 @@ export default {
   position: relative;
   border-radius: 25px;
   background-color:blanchedalmond;
+  margin: 5px;
+}
+
+.freet-actions {
+  display: flex;
+  justify-content: space-evenly;
 }
 
 </style>

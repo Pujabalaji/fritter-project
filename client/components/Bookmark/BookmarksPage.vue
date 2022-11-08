@@ -21,9 +21,7 @@
       </header>
       <div class="profileButtons">
           <!-- Select profile to filter bookmarks by -->
-          <div v-for="profileName in $store.state.profiles" v-bind:key="profileName">
-              <button @click="filterBookmarksBy(profileName)"> {{ profileName }} </button>
-          </div>
+          <button v-for="profileName in $store.state.profiles" v-bind:key="profileName" @click="filterBookmarksBy(profileName)" :class="{ active: profileName === currentProfile }"> {{ profileName }} </button>
       </div>
       </section>
       <section
@@ -56,15 +54,18 @@ export default {
     FreetComponent
   },
   data() {
-    return {profileName:null};
+    return {
+      currentProfile:null,
+    };
   },
   mounted() {
-    this.$refs.getBookmarksForm.submit(this.profileName);
+    this.$refs.getBookmarksForm.submit(this.currentProfile);
     console.log("on bookmarks page");
     console.log(this.$store.state.bookmarks);
   },
   methods: {
     filterBookmarksBy(profileName) {
+      this.currentProfile = profileName;
       this.$refs.getBookmarksForm.submit(profileName);
     }
   }
@@ -82,6 +83,15 @@ header, header > * {
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.profileButtons {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.profileButtons .active {
+  background-color: red;
 }
 
 button {
