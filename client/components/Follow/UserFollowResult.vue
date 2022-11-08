@@ -1,8 +1,20 @@
 <template>
-    <div>
-        {{ username }}
-        <button v-if = "$store.state.username !== username && this.doesNotFollow(username)" class="btn btn--primary mx-auto" @click="followRequest">Add Follow</button>
-    </div>
+    <article>
+        <div>
+            {{ username }}
+            <button v-if = "$store.state.username !== username && this.doesNotFollow(username)" class="btn btn--primary mx-auto" @click="followRequest">Follow</button>
+            <button v-if = "$store.state.username !== username && !this.doesNotFollow(username)" class="btn btn--primary mx-auto" @click="unfollowRequest">Unfollow</button>
+        </div>
+        <section class="alerts">
+            <article
+                v-for="(status, alert, index) in alerts"
+                :key="index"
+                :class="status"
+            >
+                <p>{{ alert }}</p>
+            </article>
+        </section>
+    </article>
 </template>
 
 <script>
@@ -12,9 +24,31 @@ export default {
     props: {
         username: String,
     },
+    data() {
+        return {
+            alerts: {} // Displays success/error messages encountered during freet modification
+        }
+    },
     methods: {
         doesNotFollow(username) {
             return (this.$store.state.followees.filter(followeeUsername => followeeUsername == username)).length == 0
+        },
+        async unfollowRequest() {
+            /**
+             * POST /api/follow?username=username
+             */
+            const params = {
+                method: 'DELETE',
+                message: "Successfully unfollowed " + this.username,
+                callback: () => {
+                    this.$set(this.alerts, params.message, "success");
+                    setTimeout(() => this.$delete(this.alerts, params.message), 3000);
+                    this.$store.commit('deleteFromFollowees', this.username);
+                    this.$store.commit('refreshFollowees', true);
+                }
+            }
+            const response = await this.requestFollow(params);
+            
         },
         async followRequest() {
             /** 
@@ -22,12 +56,21 @@ export default {
              * POST /api/follow?username=username
             */
             const params = {
-                method: 'POST'
+                method: 'POST',
+                message: "Successfully followed " + this.username,
+                callback: () => {
+                    this.$set(this.alerts, params.message, "success");
+                    setTimeout(() => this.$delete(this.alerts, params.message), 3000);
+                    console.log("adding" + this.username + " to followees");
+                    this.$store.commit('addToFollowees', this.username);
+                    this.$store.commit('refreshFollowees', true);
+                }
             }
-            const response = await this.requestAddFollow(params);
+            const response = await this.requestFollow(params);
         },
-        async requestAddFollow(params) {
+        async requestFollow(params) {
             /**
+             * Adds and deletes follow.
              * Submits a request to the freet's endpoint
              * @param params - Options for the request
              * @param params.body - Body for the request, if it exists
@@ -41,15 +84,16 @@ export default {
             }
 
             try {
-                const r = await fetch(`/api/follow?username=${this.username}`, options);
+                let r = await fetch(`/api/follow?username=${this.username}`, options);
                 if (!r.ok) {
                 const res = await r.json();
                 throw new Error(res.error);
                 return res;
                 }
                 
-                console.log("adding" + this.username + " to followees");
-                this.$store.commit('addToFollowees', this.username);
+                this.$store.commit('refreshFollowees', true);
+                params.callback();
+
                 const response = await r.json();
                 return response;
             } catch (e) {

@@ -107,7 +107,7 @@ const router = express.Router();
 /**
  * Delete a freet
  *
- * @name DELETE /api/follow/?username=username
+ * @name DELETE /api/follow?username=username
  *
  * @return {string} - A success message
  * @throws {403} - If the user is not logged in

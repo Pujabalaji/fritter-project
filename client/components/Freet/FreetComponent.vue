@@ -69,7 +69,6 @@ export default {
     // do API call
     //
     startEditing() {
-      console.log(this.$store.state.bookmarks);
       /**
        * Enables edit mode on this freet.
        */

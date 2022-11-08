@@ -50,6 +50,12 @@ const store = new Vuex.Store({
        */
       state.followees.push(followee);
     },
+    deleteFromFollowees(state, followee) {
+      const index = state.followees.indexOf(followee);
+      if (index > -1) {
+        state.followees.splice(index, 1);
+     }
+    },
     updateFilter(state, filter) {
       /**
        * Update the stored freets filter to the specified one.
@@ -73,6 +79,12 @@ const store = new Vuex.Store({
     },
     updateBookmarks(state, bookmarks) {
       state.bookmarks = bookmarks;
+    },
+    async refreshFollowees(state) {
+      const url = `/api/follow/followees/${state.username}`;
+      const res = await fetch(url).then(async r => r.json());
+      const followees = res.map(followee => followee.username);
+      state.followees = followees;
     },
     async refreshFreets(state) {
       /**

@@ -97,8 +97,6 @@ export default {
             this.request(params, false, true, bookmarkId);
         },
         async addToBookmark(profileName) {
-            console.log("freet in SelectProfileModal");
-            console.log(this.freet);
             const params = {
                 method: 'POST',
                 body: JSON.stringify({profileName: profileName, freetId: this.freet._id}),
@@ -118,7 +116,6 @@ export default {
              * GET /api/profile?username=username
             */
             this.$store.commit('refreshBookmarks', true);
-
             const params = {
                 method: 'GET'
             }
@@ -137,7 +134,6 @@ export default {
             };
             if (params.body) {
                 options.body = params.body;
-                console.log(options.body);
             }
 
             try {
