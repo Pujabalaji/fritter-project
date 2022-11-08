@@ -19,11 +19,12 @@
           />
         </div>
       </header>
-      <section>
+      <div class="profileButtons">
           <!-- Select profile to filter bookmarks by -->
           <div v-for="profileName in $store.state.profiles" v-bind:key="profileName">
               <button @click="filterBookmarksBy(profileName)"> {{ profileName }} </button>
           </div>
+      </div>
       </section>
       <section
         v-if="$store.state.bookmarks.length"

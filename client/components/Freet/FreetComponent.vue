@@ -12,22 +12,22 @@
       :value="draft"
       @input="draft = $event.target.value"
     />
-    <p v-else class="content">
+    <p v-else class="freet-content">
       {{ freet.content }}
     </p>
     <p class="info">
       Posted at {{ freet.dateModified }}
       <i v-if="freet.edited">(edited)</i>
     </p>
-    <span class="actions">
-      <div v-if="$store.state.username === freet.author">
+    <span class="freet-actions">
+      <div class="freet-own-author" v-if="$store.state.username === freet.author">
         <button v-if="editing" @click="submitEdit">✅ Save changes</button>
         <button v-if="editing" @click="stopEditing">🚫 Discard changes</button>
         <button v-if="!editing" @click="startEditing">✏️ Edit</button>
         <button @click="deleteFreet">🗑️ Delete</button>
         <button v-if="!bookmarking" @click="startBookmarking">🔖 Bookmark</button>
       </div>
-      <div v-if="$store.state.username !== freet.author">
+      <div class="freet-non-author" v-if="$store.state.username !== freet.author">
         <button v-if="!bookmarking" @click="startBookmarking">🔖 Bookmark</button>
         <Modal v-if="bookmarking">
           <SelectProfileModal :freet="freet" />

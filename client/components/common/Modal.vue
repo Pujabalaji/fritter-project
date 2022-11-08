@@ -1,20 +1,20 @@
 <template>
     <transition name="fade">
-      <div class="Modal" v-if="show">
-        <div class="modal__backdrop" @click="closeModal()"/>
+      <div class="modal" v-if="show">
+        <div class="modal-backdrop" @click="closeModal()"/>
   
-        <div class="modal__dialog">
-            <div class="modal__header">
+        <div class="modal-dialog">
+            <div class="modal-header">
                 <slot name="header"/>
                 <button type="button" class="modal__close" @click="closeModal()">
                 </button>
             </div>
     
-            <div class="modal__body">
+            <div class="modal-body">
                 <slot name="body"/>
             </div>
     
-            <div class="modal__footer">
+            <div class="modal-footer">
                 <slot name="footer"/>
             </div>
         </div>
@@ -42,4 +42,25 @@
     }
   };
 </script>
+
+<style scoped>
+.modal {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 99;
+	background-color: rgba(32, 29, 29, 0.2);
+	
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.modal > .modal-dialog {
+		background-color:blanchedalmond;
+		padding: 32px;
+	}
+</style>
   
