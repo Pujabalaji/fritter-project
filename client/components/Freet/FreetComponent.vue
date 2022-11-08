@@ -5,16 +5,6 @@
   <article class="freet">
     <header>
       <h3 class="author">@{{ freet.author }}</h3>
-      <div v-if="$store.state.username === freet.author" class="actions">
-        <button v-if="editing" @click="submitEdit">✅ Save changes</button>
-        <button v-if="editing" @click="stopEditing">🚫 Discard changes</button>
-        <button v-if="!editing" @click="startEditing">✏️ Edit</button>
-        <button @click="deleteFreet">🗑️ Delete</button>
-      </div>
-      <button v-if="!bookmarking" @click="startBookmarking">🔖 Bookmark</button>
-      <Modal v-if="bookmarking">
-        <SelectProfileModal :freet="freet" />
-      </Modal>
     </header>
     <textarea
       v-if="editing"
@@ -29,6 +19,21 @@
       Posted at {{ freet.dateModified }}
       <i v-if="freet.edited">(edited)</i>
     </p>
+    <span class="actions">
+      <div v-if="$store.state.username === freet.author">
+        <button v-if="editing" @click="submitEdit">✅ Save changes</button>
+        <button v-if="editing" @click="stopEditing">🚫 Discard changes</button>
+        <button v-if="!editing" @click="startEditing">✏️ Edit</button>
+        <button @click="deleteFreet">🗑️ Delete</button>
+        <button v-if="!bookmarking" @click="startBookmarking">🔖 Bookmark</button>
+      </div>
+      <div v-if="$store.state.username !== freet.author">
+        <button v-if="!bookmarking" @click="startBookmarking">🔖 Bookmark</button>
+        <Modal v-if="bookmarking">
+          <SelectProfileModal :freet="freet" />
+        </Modal>
+      </div>
+    </span>
     <section class="alerts">
       <article
         v-for="(status, alert, index) in alerts"
@@ -163,5 +168,8 @@ export default {
   border: 1px solid #111;
   padding: 20px;
   position: relative;
+  border-radius: 25px;
+  background-color:blanchedalmond;
 }
+
 </style>

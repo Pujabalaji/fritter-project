@@ -40,10 +40,13 @@ body {
   padding: 0;
   margin: 0;
   font-size: 1.2em;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  background-color:floralwhite;
 }
 
 main {
-  padding: 0 5em 5em;
+  margin: 0em 10em 10em;
+  padding: 0em 10em 10em;
 }
 
 .alerts {

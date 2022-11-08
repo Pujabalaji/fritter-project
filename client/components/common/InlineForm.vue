@@ -48,10 +48,12 @@ export default {
 form {
     display: flex;
     position: relative;
+
 }
 
 input {
     padding: 0 5px;
-    min-width: 200px;
+    min-width: 400px;
+    min-height: 40px;
 }
 </style>

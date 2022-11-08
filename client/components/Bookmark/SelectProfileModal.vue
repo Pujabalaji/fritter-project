@@ -62,6 +62,8 @@ export default {
             console.log("store bookmarks" + typeof this.$store.state.bookmarks);
             console.log(this.$store.state.bookmarks);
             for (const bookmark of this.$store.state.bookmarks) {
+                console.log("checking " + bookmark.profileName + " " + bookmark.author + " " + bookmark.freetId._id);
+                console.log('against ' + profileName + " " + this.$store.state.username + " " + this.freet._id);
                 if (bookmark.profileName === profileName && bookmark.author === this.$store.state.username && bookmark.freetId._id === this.freet._id ) {
                     console.log("this bookmark has already been added");
                     return true
@@ -90,7 +92,6 @@ export default {
                     const message = 'Successfully deleted freet from bookmarks in ' + profileName;
                     this.$set(this.alerts, message, 'success');
                     setTimeout(() => this.$delete(this.alerts, message), 3000);
-                    this.$store.commit('refreshBookmarks', true);
                 },
             };
             const bookmarkId = this.findBookmarkWithFreetIdAndProfileName(profileName)
@@ -104,7 +105,6 @@ export default {
                     const message = 'Successfully added freet to bookmarks in ' + profileName;
                     this.$set(this.alerts, message, 'success');
                     setTimeout(() => this.$delete(this.alerts, message), 3000);
-                    this.$store.commit('refreshBookmarks', true);
                 }
             };
             this.request(params, true, false);
@@ -156,6 +156,7 @@ export default {
                 if (params.callback) {
                     params.callback();
                 }
+                this.$store.commit('refreshBookmarks', true);
                 return response;
             } catch (e) {
                 this.$set(this.alerts, e, 'error');

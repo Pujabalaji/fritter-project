@@ -59,6 +59,8 @@ export default {
   },
   mounted() {
     this.$refs.getBookmarksForm.submit(this.profileName);
+    console.log("on bookmarks page");
+    console.log(this.$store.state.bookmarks);
   },
   methods: {
     filterBookmarksBy(profileName) {

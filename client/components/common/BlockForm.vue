@@ -128,12 +128,14 @@ export default {
 <style scoped>
 form {
   border: 1px solid #111;
+  border-radius: 15px;
   padding: 0.5rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   margin-bottom: 14px;
   position: relative;
+  background-color: blanchedalmond;
 }
 
 article > div {

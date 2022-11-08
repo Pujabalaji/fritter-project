@@ -74,6 +74,7 @@ export default {
 
 <style scoped>
 section {
+  width: 40em;
   display: flex;
   flex-direction: column;
 }
