@@ -42,9 +42,7 @@ const constructBookmarkResponse = (bookmark: HydratedDocument<Bookmark>): Bookma
   const {username} = bookmarkCopy.freetId.authorId;
   const {dateCreated} = bookmarkCopy.freetId;
   const {dateModified} = bookmarkCopy.freetId;
-  delete bookmarkCopy.freetId;
   const {dateAdded} = bookmarkCopy;
-  delete bookmarkCopy.freetId;
   return {
     ...bookmarkCopy,
     _id: bookmarkCopy._id.toString(),

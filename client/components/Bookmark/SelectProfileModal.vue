@@ -9,7 +9,12 @@
   
         <template v-slot:body>
             <div v-for="profile in allProfiles" v-bind:key="profile.profileName">
-                <button @click="addToBookmark(profile.profileName)"> {{ profile.profileName }} </button>
+                <div v-if="checkFreetBookmarkedInProfile(profile.profileName)">
+                    {{ profile.profileName }}  <button @click="deleteBookmark(profile.profileName)"> Unsave </button>
+                </div>
+                <div v-else>
+                    {{ profile.profileName }}  <button @click="addToBookmark(profile.profileName)"> Save </button>
+                </div>
             </div>
         </template>
   
@@ -53,6 +58,44 @@ export default {
         }
     }, 
     methods: {
+        checkFreetBookmarkedInProfile(profileName) {
+            console.log("store bookmarks" + typeof this.$store.state.bookmarks);
+            console.log(this.$store.state.bookmarks);
+            for (const bookmark of this.$store.state.bookmarks) {
+                if (bookmark.profileName === profileName && bookmark.author === this.$store.state.username && bookmark.freetId._id === this.freet._id ) {
+                    console.log("this bookmark has already been added");
+                    return true
+                }
+            }
+            return false;
+        },
+        findBookmarkWithFreetIdAndProfileName(profileName) {
+            /**
+             * returns bookmark id of bookmark with matching freet id and profile name
+             */
+            for (const bookmark of this.$store.state.bookmarks) {
+                if (bookmark.profileName === profileName && bookmark.author === this.$store.state.username && bookmark.freetId._id === this.freet._id ) {
+                    return bookmark._id;
+                }
+            }
+        },
+        async deleteBookmark(profileName) {
+            /**
+             * Deletes bookmark.
+             */
+            console.log("deleting bookmark!");
+            const params = {
+                method: "DELETE",
+                callback: () => {
+                    const message = 'Successfully deleted freet from bookmarks in ' + profileName;
+                    this.$set(this.alerts, message, 'success');
+                    setTimeout(() => this.$delete(this.alerts, message), 3000);
+                    this.$store.commit('refreshBookmarks', true);
+                },
+            };
+            const bookmarkId = this.findBookmarkWithFreetIdAndProfileName(profileName)
+            this.request(params, false, true, bookmarkId);
+        },
         async addToBookmark(profileName) {
             console.log("freet in SelectProfileModal");
             console.log(this.freet);
@@ -60,14 +103,13 @@ export default {
                 method: 'POST',
                 body: JSON.stringify({profileName: profileName, freetId: this.freet._id}),
                 callback: () => {
-                    console.log("profileName" + profileName);
                     const message = 'Successfully added freet to bookmarks in ' + profileName;
                     this.$set(this.alerts, message, 'success');
-                    this.$store.commit('refreshBookmarks', true);
                     setTimeout(() => this.$delete(this.alerts, message), 3000);
+                    this.$store.commit('refreshBookmarks', true);
                 }
             };
-            this.request(params, true);
+            this.request(params, true, false);
 
         },
         async getAllProfiles() {
@@ -75,13 +117,15 @@ export default {
              * Gets list of profiles that belong to this user.
              * GET /api/profile?username=username
             */
+            this.$store.commit('refreshBookmarks', true);
+
             const params = {
                 method: 'GET'
             }
-            const response = await this.request(params, false);
+            const response = await this.request(params, false, false);
             this.allProfiles = response;
         },
-        async request(params, addingBookmark) {
+        async request(params, addingBookmark, deleteBookmark, bookmarkId = null) {
             /**
              * Submits a request to the freet's endpoint
              * @param params - Options for the request
@@ -98,7 +142,9 @@ export default {
 
             try {
                 let r;
-                if (!addingBookmark) {
+                if (deleteBookmark) {
+                    r = await fetch(`/api/bookmark/${bookmarkId}`, options);
+                } else if (!addingBookmark) {
                     r = await fetch(`/api/profile?username=${this.$store.state.username}`, options);
                 } else {
                     r = await fetch(`/api/bookmark`, options);

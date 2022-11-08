@@ -22,7 +22,7 @@ class BookmarkCollection {
       dateAdded: date
     });
     await bookmark.save(); // Saves freet to MongoDB
-    return await bookmark.populate(['freetId', 'profileId']);
+    return await bookmark.populate([{path: 'freetId', populate: {path: 'authorId'}}, 'profileId']);
   }
 
   /**
@@ -32,7 +32,7 @@ class BookmarkCollection {
    * @return {Promise<HydratedDocument<Bookmark>> | Promise<null> } - The bookmark with the given bookmarkId, if any
    */
    static async findOne(bookmarkId: Types.ObjectId | string): Promise<HydratedDocument<Bookmark>> {
-    return BookmarkModel.findOne({_id: bookmarkId}).populate(['freetId', 'profileId']);
+    return await BookmarkModel.findOne({_id: bookmarkId}).populate([{path: 'freetId', populate: {path: 'authorId'}}, 'profileId']);
   }
 
     /**
@@ -82,7 +82,7 @@ class BookmarkCollection {
     const escapeStringRegexp = require('escape-string-regexp');
     const $regex = escapeStringRegexp(keyword);
     const matchingFreetIds = await FreetModel.find({content: { $regex }})
-    return BookmarkModel.find({profileId: profile._id, freetId: {$in: matchingFreetIds}}).populate([{path: 'freetId', populate: {path: 'authorId'}}, 'profileId']);;
+    return BookmarkModel.find({profileId: profile._id, freetId: {$in: matchingFreetIds}}).populate(['freetId', 'profileId']);
   }
 
   /**
