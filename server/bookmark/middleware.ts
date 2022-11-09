@@ -36,11 +36,7 @@ const isBookmarkIdParamExists = async(req: Request, res: Response, next: NextFun
  * Checks if freet has already been bookmarked to profile
  */
  const isBookmarkAlreadyAdded = async (req: Request, res: Response, next: NextFunction) => {
-  console.log("req.body.profileName" + req.body.profileName);
-  console.log("req.body.freetId" + req.body.freetId as string);
   const bookmark = await BookmarkCollection.findOneByFreetIdAndProfileName(req.body.profileName, req.body.freetId);
-  console.log("bookmark in isBookmarkAlreadyAdded is");
-  console.log(bookmark);
   if (bookmark) {
     res.status(409).json({
       error: "Freet already bookmarked in this profile."

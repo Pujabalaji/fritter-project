@@ -82,7 +82,6 @@ const router = express.Router();
         userValidator.isUserLoggedIn
     ],
     async (req: Request, res: Response) => {
-      console.log("req.body.profileName" + req.body.profileName);
       await ProfileCollection.deleteOne(req.body.profileName);
       res.status(200).json({
         message: 'Your profile was deleted successfully.'

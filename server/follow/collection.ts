@@ -70,8 +70,6 @@ class FollowCollection {
     const follower = await UserCollection.findOneByUsername(username); // get the user id of follower
     const follows = await FollowCollection.findAllFolloweesByUsername(follower.username);
     const followeesIds = follows.map(follow => follow.followeeId._id);
-    console.log("followeesIds");
-    console.log(followeesIds);
     return FreetModel.find({authorId: {$in: followeesIds}}).populate('authorId'); 
   }
 

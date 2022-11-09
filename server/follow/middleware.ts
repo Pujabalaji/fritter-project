@@ -7,7 +7,6 @@ import FollowCollection from '../follow/collection';
  */
 const isFollowerExists = async (req: Request, res: Response, next: NextFunction) => {
   if (!req.query.username) {
-    console.log("inside isFollower exists")
     res.status(400).json({
       error: 'Must provide a nonempty username to follow.'
     });

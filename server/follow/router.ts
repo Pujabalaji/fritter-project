@@ -70,7 +70,6 @@ const router = express.Router();
   ],
   async (req: Request, res: Response) => {
       const followees = await FollowCollection.findAllFollowersByUsername(req.params.username as string);
-      console.log(followees);
       const response = followees.map(util.constructFollowerResponse);
       res.status(200).json(response);
   }

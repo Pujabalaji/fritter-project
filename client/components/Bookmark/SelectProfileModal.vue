@@ -59,11 +59,7 @@ export default {
     }, 
     methods: {
         checkFreetBookmarkedInProfile(profileName) {
-            console.log("store bookmarks" + typeof this.$store.state.bookmarks);
-            console.log(this.$store.state.bookmarks);
             for (const bookmark of this.$store.state.bookmarks) {
-                console.log("checking " + bookmark.profileName + " " + bookmark.author + " " + bookmark.freetId._id);
-                console.log('against ' + profileName + " " + this.$store.state.username + " " + this.freet._id);
                 let freetInBookmark;
                 try {
                     freetInBookmark = this.freet.freetId._id;
@@ -71,7 +67,6 @@ export default {
                     freetInBookmark = this.freet._id;
                 }
                 if (bookmark.profileName === profileName && bookmark.author === this.$store.state.username && bookmark.freetId._id === freetInBookmark) {
-                    console.log("this bookmark has already been added");
                     return true
                 }
             }
@@ -91,7 +86,6 @@ export default {
             /**
              * Deletes bookmark.
              */
-            console.log("deleting bookmark!");
             const params = {
                 method: "DELETE",
                 callback: () => {
@@ -157,8 +151,6 @@ export default {
                     return res;
                 }                
                 const response = await r.json();
-                console.log("response in select profile modal request");
-                console.log(response);
                 if (params.callback) {
                     params.callback();
                 }

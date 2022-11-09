@@ -62,16 +62,12 @@ export default {
   },
   mounted() {
     this.$refs.getBookmarksForm.submit(this.currentProfile);
-    console.log("on bookmarks page");
-    console.log(this.$store.state.bookmarks);
   },
   methods: {
     updateCurrentProfile(prof) {
-      console.log("im updating");
       this.currentProfile = prof;
     },
     filterBookmarksBy(profileName) {
-      console.log("currentProfile on bookmarksPage" + this.currentProfile);
       this.currentProfile = profileName;
       this.$refs.getBookmarksForm.submit(profileName);
     }

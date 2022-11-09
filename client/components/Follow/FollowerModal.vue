@@ -71,7 +71,6 @@ export default {
                 }
 
                 const response = await r.json();
-                console.log(response);
                 return response;
             } catch (e) {
                 this.$set(this.alerts, e, 'error');

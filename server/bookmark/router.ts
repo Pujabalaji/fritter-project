@@ -32,7 +32,6 @@ export {router as bookmarkRouter};
  router.get(
     '/',
     async (req: Request, res: Response, next: NextFunction) => {
-      console.log("in the no profile name route");
       if (req.query.keyword !== undefined) {
         next();
         return;
@@ -40,16 +39,12 @@ export {router as bookmarkRouter};
       
       const allBookmarks = await BookmarkCollection.findAll();
       const response = allBookmarks.map(util.constructBookmarkResponse);
-      console.log("all bookmarks response");
-      console.log(response);
       res.status(200).json(response);
     },
     [],
     async (req: Request, res: Response) => {
       const profileBookmarks = await BookmarkCollection.findAllByKeyword(req.session.userId as string, req.query.keyword as string);
       const response = profileBookmarks.map(util.constructBookmarkResponse);
-      console.log("response in router");
-      console.log(response);
       res.status(200).json(response);
     }
  );
@@ -71,7 +66,6 @@ export {router as bookmarkRouter};
   //   profileValidator.isParamsProfileNameExistsForCurrentUser
   // ],
   async (req: Request, res: Response, next: NextFunction) => {
-    console.log("in the profileName route");
     if (req.query.keyword !== undefined) {
       next();
       return;

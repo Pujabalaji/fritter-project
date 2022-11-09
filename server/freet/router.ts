@@ -34,7 +34,6 @@ router.get(
       return;
     }
 
-    console.log("username to find freets of" + req.query.username);
     const allFreets = await FreetCollection.findAll();
     const response = allFreets.map(util.constructFreetResponse);
     res.status(200).json(response);

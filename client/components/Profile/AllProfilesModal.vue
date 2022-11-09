@@ -43,12 +43,8 @@ export default {
                 method: 'GET'
             }
             const response = await this.request(params);
-            console.log("all profiles response");
-            console.log(response);
             const profiles = response.map(profile => profile.profileName);
-            console.log(profiles);
             this.$store.commit('setProfiles', profiles);
-            console.log(this.$store.state.profiles);
         },
         async request(params) {
             /**
@@ -73,7 +69,6 @@ export default {
                 }
 
                 const response = await r.json();
-                console.log(response);
                 return response;
             } catch (e) {
                 this.$set(this.alerts, e, 'error');

@@ -49,7 +49,6 @@ class ProfileCollection {
    * @return {Promise<HydratedDocument<Profile>> | Promise<null>} - The profile with the given profileName, if any
    */
     static async findOneByProfileName(profileName: string): Promise<HydratedDocument<Profile>> {
-        console.log("profile name is" + profileName);
         return ProfileModel.findOne({profileName: new RegExp(`^${profileName.trim()}$`, 'i')});
     }
     

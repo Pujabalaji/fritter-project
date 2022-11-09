@@ -35,8 +35,6 @@ export default {
     },
     mounted() {
         this.$store.commit('refreshFollowees', true);
-        console.log("store followees in beginning of FolloweeModal");
-        console.log(this.$store.state.followees);
     }
 }
 </script>

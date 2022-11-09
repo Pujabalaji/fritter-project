@@ -37,8 +37,6 @@ const constructBookmarkResponse = (bookmark: HydratedDocument<Bookmark>): Bookma
   const {profileName} = bookmarkCopy.profileId;
   delete bookmarkCopy.profileId;
   const {content} = bookmarkCopy.freetId;
-  console.log("bookmarkCopy.freetId.authorId" + bookmarkCopy.freetId.authorId as string);
-  console.log("bookmarkCopy.freetId.authorId.username" + bookmarkCopy.freetId.authorId.username as string);
   const {username} = bookmarkCopy.freetId.authorId;
   const {dateCreated} = bookmarkCopy.freetId;
   const {dateModified} = bookmarkCopy.freetId;

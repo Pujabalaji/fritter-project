@@ -61,7 +61,6 @@ export default {
                 callback: () => {
                     this.$set(this.alerts, params.message, "success");
                     setTimeout(() => this.$delete(this.alerts, params.message), 3000);
-                    console.log("adding" + this.username + " to followees");
                     this.$store.commit('addToFollowees', this.username);
                     this.$store.commit('refreshFollowees', true);
                 }
@@ -135,7 +134,6 @@ export default {
                 }
 
                 const response = await r.json();
-                console.log(response);
                 return response;
             } catch (e) {
                 this.$set(this.alerts, e, 'error');
