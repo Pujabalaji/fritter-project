@@ -26,6 +26,8 @@ export default {
         this.profileName = null; // no profile name selected 
       }
 
+      console.log("currentProfile is" + this.profileName);
+      this.$emit('currentProfile', this.profileName);
       if (this.profileName !== null && this.value) {
         url = `/api/bookmark/${this.profileName}?keyword=${this.value}`;
       } else if (this.profileName !== null) {

@@ -171,6 +171,12 @@ export default {
 .freet-actions {
   display: flex;
   justify-content: space-evenly;
+  height: 1.8em;
+}
+
+button {
+  outline-color: burlywood;
+  background-color: floralwhite;
 }
 
 </style>

@@ -7,9 +7,11 @@
     <section>
       <header>
         <h2>Welcome to the settings for @{{ $store.state.username }} </h2>
-        <FollowerModal />
-        <FolloweeModal />
-        <AllUsersModal />
+        <span class="modals">
+          <FollowerModal />
+          <FolloweeModal />
+          <AllUsersModal />
+        </span>
       </header>
     </section>
 
@@ -68,3 +70,10 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.modals {
+  display: flex;
+  justify-content: space-evenly;
+}
+</style>

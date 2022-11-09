@@ -11,7 +11,7 @@
           </h2>
         </div>
         <div class="right">
-          <GetBookmarksForm
+          <GetBookmarksForm @currentProfile="updateCurrentProfile"
             ref="getBookmarksForm"
             value="keyword"
             placeholder="🔍 Filter by keyword (optional)"
@@ -21,6 +21,8 @@
       </header>
       <div class="profileButtons">
           <!-- Select profile to filter bookmarks by -->
+          <!-- <button v-for="profileName in $store.state.profiles" v-bind:key="profileName" @click="filterBookmarksBy(profileName)" @currentProfile="setCurrentProfile($event)"> {{ profileName }} </button> -->
+
           <button v-for="profileName in $store.state.profiles" v-bind:key="profileName" @click="filterBookmarksBy(profileName)" :class="{ active: profileName === currentProfile }"> {{ profileName }} </button>
       </div>
       </section>
@@ -55,7 +57,7 @@ export default {
   },
   data() {
     return {
-      currentProfile:null,
+      currentProfile: null,
     };
   },
   mounted() {
@@ -64,7 +66,12 @@ export default {
     console.log(this.$store.state.bookmarks);
   },
   methods: {
+    updateCurrentProfile(prof) {
+      console.log("im updating");
+      this.currentProfile = prof;
+    },
     filterBookmarksBy(profileName) {
+      console.log("currentProfile on bookmarksPage" + this.currentProfile);
       this.currentProfile = profileName;
       this.$refs.getBookmarksForm.submit(profileName);
     }
@@ -88,14 +95,17 @@ header, header > * {
 .profileButtons {
   display: flex;
   justify-content: space-evenly;
+  height: 1.8em;
+  margin: 0.2em;
 }
 
 .profileButtons .active {
-  background-color: red;
+  background-color: blanchedalmond;  
 }
 
 button {
-    margin-right: 10px;
+  margin-right: 10px;
+  background-color: floralwhite;
 }
 
 section .scrollbox {

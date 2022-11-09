@@ -82,3 +82,9 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+button {
+      background-color: floralwhite;
+}
+</style>

@@ -1,6 +1,6 @@
 <template>
     <div>
-      <button class="btn btn--primary mx-auto" @click="$refs.selectProfileModal.openModal()">View All Profiles</button>
+      <button class="btn btn--primary mx-auto" @click="$refs.selectProfileModal.openModal()">Select Profile</button>
 
       <Modal ref="selectProfileModal">
         <template v-slot:header>
@@ -19,8 +19,8 @@
         </template>
   
         <template v-slot:footer>
-          <div class="d-flex align-items-center justify-content-between">
-            <button class="btn btn--secondary" @click="$refs.selectProfileModal.closeModal()">Close</button>
+          <div class="buttons">
+            <button class="button-profile" @click="$refs.selectProfileModal.closeModal()">Close</button>
           </div>
         </template>
       </Modal>
@@ -173,3 +173,10 @@ export default {
 }
 </script>
 
+<style scoped>
+button {
+    margin-right: 10px;
+    background-color: floralwhite;
+    height: 2.7em;
+}
+</style>

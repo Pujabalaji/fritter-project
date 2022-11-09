@@ -58,6 +58,10 @@
 	justify-content: center;
 }
 
+/* .header.button {
+  background-color: floralwhite;
+} */
+
 .modal > .modal-dialog {
 		background-color:blanchedalmond;
 		padding: 32px;
