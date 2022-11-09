@@ -64,7 +64,13 @@ export default {
             for (const bookmark of this.$store.state.bookmarks) {
                 console.log("checking " + bookmark.profileName + " " + bookmark.author + " " + bookmark.freetId._id);
                 console.log('against ' + profileName + " " + this.$store.state.username + " " + this.freet._id);
-                if (bookmark.profileName === profileName && bookmark.author === this.$store.state.username && bookmark.freetId._id === this.freet.freetId._id ) {
+                let freetInBookmark;
+                try {
+                    freetInBookmark = this.freet.freetId._id;
+                } catch(e) {
+                    freetInBookmark = this.freet._id;
+                }
+                if (bookmark.profileName === profileName && bookmark.author === this.$store.state.username && bookmark.freetId._id === freetInBookmark) {
                     console.log("this bookmark has already been added");
                     return true
                 }
